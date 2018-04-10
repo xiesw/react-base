@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './page/App';
 import registerServiceWorker from './registerServiceWorker';
 import {AppContainer} from 'react-hot-loader';
+require('./style.less');
 
 ReactDOM.render(
   <AppContainer>
