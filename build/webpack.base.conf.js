@@ -42,7 +42,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name][md5:hash].[ext]',
+              name: '[name][hash:8].[ext]',
               outputPath: 'images/'
             }
           },
