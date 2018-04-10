@@ -2,6 +2,7 @@ const path = require('path');
 const APP_PATH = path.resolve(__dirname, '../src');
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
 const DIST_PATH = path.resolve(__dirname, '../dist');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -20,9 +21,20 @@ module.exports = {
         include: APP_PATH
       },
       {
-        test: /\.css$/,
-        loader: ['style-loader', 'css-loader'],
-        include: APP_PATH
+        test: /\.less$/,
+        // 因为这个插件需要干涉模块转换的内容，所以需要使用它对应的 loader
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true // css压缩
+              }
+            },
+            'less-loader',
+          ],
+        }),
       },
       {
         test: /\.(png|jpg|gif|svg|ico|json)$/,
@@ -42,4 +54,9 @@ module.exports = {
       },
     ]
   },
+  plugins: [
+    new ExtractTextPlugin({
+      filename: "style/[name].[hash:8].css"
+    }),
+  ],
 };
